@@ -1,0 +1,35 @@
+name: network-incident-triage-remediation
+description: Deterministic OpenEnv-compatible NOC simulation for alert analysis, root-cause identification, prioritization, remediation, and incident closure.
+entrypoint: env.environment:NetworkIncidentTriageEnvironment
+models:
+  observation: env.models:Observation
+  action: env.models:Action
+  reward: env.models:Reward
+api:
+  reset:
+    method: POST
+    path: /reset
+  step:
+    method: POST
+    path: /step
+  state:
+    method: GET
+    path: /state
+tasks:
+  - id: task_easy_network_classification
+    difficulty: easy
+    objective: classify the incident correctly
+  - id: task_medium_root_cause_priority
+    difficulty: medium
+    objective: identify root cause and assign the right priority
+  - id: task_hard_full_workflow
+    difficulty: hard
+    objective: complete classification, diagnosis, remediation, and resolution
+deterministic: true
+max_episode_steps: 8
+inference:
+  command: python inference.py
+  stdout_markers:
+    - "[START]"
+    - "[STEP]"
+    - "[END]"

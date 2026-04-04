@@ -1,0 +1,19 @@
+[project]
+name = "meta-pytorch-hackathon"
+version = "0.1.0"
+description = "OpenEnv benchmark for network incident triage and remediation"
+authors = [{name = "OpenEnv Hackathon Submission"}]
+dependencies = [
+    "openenv-core>=0.2.0",
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "openai",
+    "python-dotenv",
+]
+
+[project.scripts]
+server = "server.app:main"
+
+[tool.setuptools]
+packages = ["env", "server"]
