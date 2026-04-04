@@ -11,7 +11,7 @@ tags:
   - fastapi
   - agents
   - sre
-short_description: Deterministic OpenEnv benchmark for network incident triage and remediation.
+short_description: OpenEnv benchmark for network incident triage.
 ---
 
 # Network Incident Triage and Remediation
