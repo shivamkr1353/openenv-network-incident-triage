@@ -77,7 +77,7 @@ Valid `ActionType` values:
 
 ## Reward design
 
-Step rewards are always normalized to `[0.0, 1.0]`. Positive progress is awarded immediately when the agent completes a meaningful part of the workflow. Penalties reduce the final normalized score rather than emitting negative step rewards, which keeps the reward interface within the hackathon constraints.
+Step rewards are always normalized to `[0.0, 1.0]`. Final task scores are kept strictly inside `(0.0, 1.0)` to satisfy the hackathon validator. Positive progress is awarded immediately when the agent completes a meaningful part of the workflow. Penalties reduce the final normalized score rather than emitting negative step rewards, which keeps the reward interface within the hackathon constraints.
 
 Penalty cases include:
 
@@ -140,9 +140,9 @@ The script prints exactly these line types:
 
 The deterministic reference planner reaches:
 
-- Easy: `1.00`
-- Medium: `1.00`
-- Hard: `1.00`
+- Easy: `0.99`
+- Medium: `0.99`
+- Hard: `0.99`
 
 ## Local setup
 
@@ -227,7 +227,7 @@ Source: Hugging Face Spaces Configuration Reference: https://huggingface.co/docs
 - OpenEnv spec implemented with typed models
 - `openenv validate` passes
 - 3 tasks with deterministic graders
-- normalized score and reward outputs in `[0.0, 1.0]`
+- normalized reward outputs in `[0.0, 1.0]` and task scores strictly inside `(0.0, 1.0)`
 - root healthcheck returns `200 OK`
 - Docker image builds and serves the API
 - baseline inference script is at repo root and uses the OpenAI client

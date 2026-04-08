@@ -9,6 +9,7 @@ from env.models import Action, ActionType, IncidentMemory, IncidentTask, Reward
 class IncidentGrader:
     """Deterministic keyword-based grader for incident handling actions."""
 
+    SCORE_EPSILON = 0.01
     INCIDENT_MISMATCH_PENALTY = 0.15
     WRONG_ACTION_PENALTY = 0.10
     DUPLICATE_ACTION_PENALTY = 0.02
@@ -211,7 +212,12 @@ class IncidentGrader:
 
     def score(self, task: IncidentTask, memory: IncidentMemory) -> float:
         raw_score = sum(memory.component_scores.values()) - memory.penalty_points
-        return round(max(0.0, min(1.0, raw_score)), 4)
+        clamped_score = max(0.0, min(1.0, raw_score))
+        if clamped_score <= 0.0:
+            return self.SCORE_EPSILON
+        if clamped_score >= 1.0:
+            return round(1.0 - self.SCORE_EPSILON, 4)
+        return round(clamped_score, 4)
 
     def missing_components(self, task: IncidentTask, memory: IncidentMemory) -> list[str]:
         return [
